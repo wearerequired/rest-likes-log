@@ -13,4 +13,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Logging for rejections.
 
 [Unreleased]: https://github.com/wearerequired/rest-likes/compare/1.0.0...HEAD
-[1.0.0]: https://github.com/wearerequired/rest-likes/compare/a7da73ada3...1.0.0
+[1.0.0]: https://github.com/wearerequired/rest-likes/compare/04db752...1.0.0
