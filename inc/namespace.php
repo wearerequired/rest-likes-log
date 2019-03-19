@@ -21,6 +21,41 @@ function bootstrap() {
 }
 
 /**
+ * Determines the user's actual IP address.
+ *
+ * @return string The address on success or empty string on failure.
+ */
+function get_client_ip() {
+	$client_ip = '';
+
+	$address_headers = array(
+		'HTTP_CLIENT_IP',
+		'HTTP_X_FORWARDED_FOR',
+		'HTTP_X_FORWARDED',
+		'HTTP_X_CLUSTER_CLIENT_IP',
+		'HTTP_FORWARDED_FOR',
+		'HTTP_FORWARDED',
+		'REMOTE_ADDR',
+	);
+
+	foreach ( $address_headers as $header ) {
+		if ( array_key_exists( $header, $_SERVER ) ) {
+			/*
+			 * HTTP_X_FORWARDED_FOR can contain a chain of comma-separated
+			 * addresses. The first one is the original client. It can't be
+			 * trusted for authenticity, but we don't need to for this purpose.
+			 */
+			$address_chain = explode( ',', $_SERVER[ $header ] );
+			$client_ip     = trim( $address_chain[0] );
+
+			break;
+		}
+	}
+
+	return $client_ip;
+}
+
+/**
  * Logs when the like count is updated for an object.
  *
  * @since 1.0.0
@@ -33,7 +68,7 @@ function bootstrap() {
  * @param bool   $remove      Whether to increment or decrement the counter.
  */
 function log_update( $object_type, $object_id, $likes, $likes_i18n, $old_likes, $remove ) {
-	$ip_address = isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+	$ip_address = get_client_ip();
 	$time       = ( new DateTime( 'now', new DateTimeZone( 'UTC' ) ) )->format( 'Y-m-d H:i:s.u' );
 	$action     = $remove ? 'unlike' : 'like';
 
@@ -50,7 +85,7 @@ function log_update( $object_type, $object_id, $likes, $likes_i18n, $old_likes, 
  * @param string    $object_type Object type.
  */
 function log_reject( $result, $object_id, $object_type ) {
-	$ip_address = isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+	$ip_address = get_client_ip();
 	$time       = ( new DateTime( 'now', new DateTimeZone( 'UTC' ) ) )->format( 'Y-m-d H:i:s.u' );
 	$action     = 'rejected';
 
