@@ -1,6 +1,6 @@
 # REST Likes: Log
 
-An add-on for the REST Likes WordPress plugin to log likes and API rejections in a database table.
+An add-on for the [REST Likes WordPress plugin](https://github.com/wearerequired/rest-likes) to log likes and API rejections in a database table.
 
 ## Installation
 
