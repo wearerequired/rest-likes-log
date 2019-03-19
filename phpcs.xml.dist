@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="REST Likes: Log">
+  <description>Coding Standard for REST Likes: Log plugin.</description>
+
+  <file>.</file>
+
+  <rule ref="Required"/>
+
+  <rule ref="WordPress.WP.I18n">
+    <properties>
+      <property name="text_domain" type="array" value="rest-likes-log" />
+    </properties>
+  </rule>
+
+  <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+    <properties>
+      <property name="prefixes" type="array" value="Required\RestLikes\Log"/>
+    </properties>
+  </rule>
+
+  <exclude-pattern>*/tests/*</exclude-pattern>
+</ruleset>
