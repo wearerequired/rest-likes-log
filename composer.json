@@ -1,0 +1,33 @@
+{
+  "name": "wearerequired/rest-likes-log",
+  "type": "wordpress-plugin",
+  "description": "Add-on for REST Likes to log like requests.",
+  "license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "required",
+			"email": "info@required.ch",
+			"homepage": "https://required.com",
+			"role": "Company"
+		},
+		{
+			"name": "Dominik Schilling",
+			"email": "dominik@required.ch",
+			"role": "Developer"
+		}
+	],
+  "require": {
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "files": [
+      "inc/namespace.php",
+      "inc/database.php"
+    ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
