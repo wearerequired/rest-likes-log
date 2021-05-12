@@ -13,7 +13,7 @@ use DateTimeZone;
 /**
  * Bootstrap the plugin.
  */
-function bootstrap() {
+function bootstrap(): void {
 	Database\bootstrap();
 
 	add_action( 'rest_likes.update_likes', __NAMESPACE__ . '\log_update', 10, 6 );
@@ -25,10 +25,10 @@ function bootstrap() {
  *
  * @return string The address on success or empty string on failure.
  */
-function get_client_ip() {
+function get_client_ip(): string {
 	$client_ip = '';
 
-	$address_headers = array(
+	$address_headers = [
 		'HTTP_CLIENT_IP',
 		'HTTP_X_FORWARDED_FOR',
 		'HTTP_X_FORWARDED',
@@ -36,10 +36,10 @@ function get_client_ip() {
 		'HTTP_FORWARDED_FOR',
 		'HTTP_FORWARDED',
 		'REMOTE_ADDR',
-	);
+	];
 
 	foreach ( $address_headers as $header ) {
-		if ( array_key_exists( $header, $_SERVER ) ) {
+		if ( \array_key_exists( $header, $_SERVER ) ) {
 			/*
 			 * HTTP_X_FORWARDED_FOR can contain a chain of comma-separated
 			 * addresses. The first one is the original client. It can't be
@@ -67,7 +67,7 @@ function get_client_ip() {
  * @param int    $old_likes   The old like count.
  * @param bool   $remove      Whether to increment or decrement the counter.
  */
-function log_update( $object_type, $object_id, $likes, $likes_i18n, $old_likes, $remove ) {
+function log_update( string $object_type, int $object_id, int $likes, int $likes_i18n, int $old_likes, bool $remove ): void {
 	$ip_address = get_client_ip();
 	$time       = ( new DateTime( 'now', new DateTimeZone( 'UTC' ) ) )->format( 'Y-m-d H:i:s.u' );
 	$action     = $remove ? 'unlike' : 'like';
@@ -84,7 +84,7 @@ function log_update( $object_type, $object_id, $likes, $likes_i18n, $old_likes, 
  * @param int       $object_id   Object ID.
  * @param string    $object_type Object type.
  */
-function log_reject( $result, $object_id, $object_type ) {
+function log_reject( \WP_Error $result, int $object_id, string $object_type ): void {
 	$ip_address = get_client_ip();
 	$time       = ( new DateTime( 'now', new DateTimeZone( 'UTC' ) ) )->format( 'Y-m-d H:i:s.u' );
 	$action     = 'rejected';
@@ -103,7 +103,7 @@ function log_reject( $result, $object_id, $object_type ) {
  * @param string $ip_address  Client IP address.
  * @param string $action      Action of log entry.
  */
-function log_to_table( int $object_id, string $object_type, string $time, string $ip_address, string $action ) {
+function log_to_table( int $object_id, string $object_type, string $time, string $ip_address, string $action ): void {
 	global $wpdb;
 
 	$wpdb->insert(
