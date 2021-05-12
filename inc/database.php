@@ -14,7 +14,7 @@ const TABLE_NAME_LOG = 'rest_likes_log';
 /**
  * Bootstrap the database.
  */
-function bootstrap() {
+function bootstrap(): void {
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\register_tables' );
 	add_action( 'admin_init', __NAMESPACE__ . '\upgrade_tables' );
 }
@@ -22,7 +22,7 @@ function bootstrap() {
 /**
  * Registers tables to $wpdb.
  */
-function register_tables() {
+function register_tables(): void {
 	global $wpdb;
 
 	$wpdb->rest_likes_log = $wpdb->prefix . TABLE_NAME_LOG;
@@ -31,7 +31,7 @@ function register_tables() {
 /**
  * Creates and upgrades tables.
  */
-function upgrade_tables() {
+function upgrade_tables(): void {
 	$current_schema_version = (int) get_option( SCHEMA_OPTION, 0 );
 	if ( SCHEMA_VERSION === $current_schema_version ) {
 		return;
@@ -49,7 +49,7 @@ function upgrade_tables() {
 /**
  * Schema of the tables.
  */
-function tables_schema() {
+function tables_schema(): string {
 	global $wpdb;
 
 	$charset_collate = $wpdb->get_charset_collate();
