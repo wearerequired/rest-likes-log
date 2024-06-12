@@ -63,11 +63,11 @@ function get_client_ip(): string {
  * @param string $object_type The object type.
  * @param int    $object_id   Object ID.
  * @param int    $likes       The like count.
- * @param int    $likes_i18n  The formatted like count.
+ * @param string $likes_i18n  The formatted like count.
  * @param int    $old_likes   The old like count.
  * @param bool   $remove      Whether to increment or decrement the counter.
  */
-function log_update( string $object_type, int $object_id, int $likes, int $likes_i18n, int $old_likes, bool $remove ): void {
+function log_update( string $object_type, int $object_id, int $likes, string $likes_i18n, int $old_likes, bool $remove ): void {
 	$ip_address = get_client_ip();
 	$time       = ( new DateTime( 'now', new DateTimeZone( 'UTC' ) ) )->format( 'Y-m-d H:i:s.u' );
 	$action     = $remove ? 'unlike' : 'like';
